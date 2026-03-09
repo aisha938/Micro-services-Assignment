@@ -10,7 +10,7 @@ Microservices architecture solves this problem by breaking a large application i
 
 Netflix is one of the most well-known companies that successfully adopted microservices. However, some organizations later realized that microservices introduced too much complexity and decided to simplify their systems by returning to monolithic designs.
 
----
+
 
 ## Netflix’s Use of Microservices
 
@@ -31,7 +31,7 @@ Each service can run, update, and scale independently. This makes it easier for 
 
 Another important aspect of Netflix’s system is how development teams are organized. Small teams are responsible for individual services and manage everything related to them, including development, deployment, and maintenance.
 
----
+
 
 ## Supporting Technologies in Netflix’s System
 
@@ -44,7 +44,7 @@ To improve reliability, Netflix also uses techniques such as circuit breakers an
 
 In addition, Netflix uses a global content delivery network called **Open Connect**, which stores copies of videos in servers located close to users. This helps reduce buffering and improves streaming performance.
 
----
+
 
 ## Example: Video Processing System
 
@@ -56,7 +56,7 @@ Additional services handle the encoding process, convert the video into differen
 
 This modular design allows Netflix to process content faster and adapt to new streaming requirements more easily.
 
----
+
 
 ## Why Microservices Work Well for Netflix
 
@@ -68,7 +68,7 @@ Second, the system becomes more reliable because failures are isolated. If one s
 
 Finally, microservices allow development teams to work independently. This enables Netflix to introduce improvements and new features quickly.
 
----
+
 
 ## Companies That Returned to Monolithic Systems
 
@@ -92,7 +92,7 @@ Many of these services depended on shared components, which meant that updates o
 
 To address the problem, engineers combined many of the services into a single application. This simplified deployment and improved productivity.
 
----
+
 
 ## Industry Perspective
 
@@ -100,7 +100,7 @@ The experiences of companies like Amazon Prime Video and Twilio show that micros
 
 Because of this, some organizations now prefer **modular monolithic architectures**. In this approach, the system remains in one application but is structured into separate modules that can later be converted into microservices if needed.
 
----
+
 
 ## Conclusion
 
