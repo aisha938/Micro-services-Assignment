@@ -1,152 +1,111 @@
-# Netflix Microservices Architecture and Companies That Reverted to Monolithic
+# Netflix Microservices Architecture and Companies That Moved Back to Monolithic Systems
 
-Netflix is one of the most famous examples of a company that successfully adopted microservices architecture. After a major outage in 2008 that shut down its DVD rental service for three days, Netflix realized that its monolithic system created serious reliability risks.
+## Introduction
 
-To solve this problem, the company migrated from a large monolithic Java application running in its own data centers to a cloud-based microservices architecture using Amazon Web Services (AWS). This change removed single points of failure and allowed Netflix to handle billions of daily requests with very high reliability.
+Software systems can be built using different architectural styles. Two of the most common approaches are **monolithic architecture** and **microservices architecture**.
 
-Today Netflix runs more than 1,000 independent microservices, each responsible for a specific business function such as recommendations, billing, user profiles, playback, and content encoding.
+In a monolithic system, the entire application is built as a single unit. All components such as user management, data processing, and business logic exist in one large codebase. While this design is simple, it can become difficult to scale and maintain as the system grows.
 
----
+Microservices architecture solves this problem by breaking a large application into many smaller services. Each service focuses on a specific function and communicates with other services through APIs.
 
-## How Netflix's Microservices Architecture Works
-
-### Decomposition and Independence
-
-Netflix divides its platform into many small services. Each service is responsible for a specific task and has its own database. Technologies such as DynamoDB, Cassandra, and Aurora are commonly used for storing data.
-
-These services communicate with each other using APIs such as REST, gRPC, or event-based messaging. This design avoids shared databases and reduces tight coupling between services.
-
-Netflix also organizes its engineering teams around these services. Small teams of around 2–8 engineers manage the entire lifecycle of each service, including building, testing, deploying, and operating it. This approach follows the principle **“you build it, you run it.”**
+Netflix is one of the most well-known companies that successfully adopted microservices. However, some organizations later realized that microservices introduced too much complexity and decided to simplify their systems by returning to monolithic designs.
 
 ---
 
-### Key Infrastructure Components
+## Netflix’s Use of Microservices
 
-Several important infrastructure tools support Netflix’s microservices architecture:
+Netflix did not originally start with microservices. In its early years, the company used a traditional monolithic application to run its platform. In 2008, a major failure in its database caused the DVD rental service to stop working for several days. This incident showed that relying on a single large system could be risky.
 
-- **API Gateway (Zuul or Envoy)** – Handles routing, security, and rate limiting  
-- **Service Discovery (Eureka)** – Allows services to find each other dynamically  
-- **Resilience Patterns** – Circuit breakers, retries, and bulkheads prevent cascading failures  
-- **Continuous Delivery (Spinnaker)** – Enables frequent and automated deployments  
-- **Event Streaming (Kafka)** – Supports real-time communication between services  
-- **Big Data Tools** – Technologies like Hadoop, Spark, and Flink process large-scale data  
+To improve reliability, Netflix gradually moved its infrastructure to the cloud and redesigned its platform using microservices. Instead of one large application, the platform now consists of many independent services that each handle a specific responsibility.
+
+For example, separate services manage:
+
+- user accounts
+- recommendation systems
+- billing
+- video playback
+- content management
+- video encoding
+
+Each service can run, update, and scale independently. This makes it easier for Netflix to handle millions of users watching content at the same time.
+
+Another important aspect of Netflix’s system is how development teams are organized. Small teams are responsible for individual services and manage everything related to them, including development, deployment, and maintenance.
 
 ---
 
-### Global Content Delivery
+## Supporting Technologies in Netflix’s System
 
-Netflix also uses its own content delivery network called **Open Connect**. This system places caching servers inside internet service providers (ISPs) so that video content can be delivered quickly to viewers around the world.
+To coordinate thousands of services, Netflix uses several infrastructure tools.
 
-In this setup, microservices manage the platform logic such as personalization and recommendations, while Open Connect handles the actual video delivery.
+An **API gateway** controls incoming requests and directs them to the correct services.  
+A **service discovery system** allows services to find each other automatically when they need to communicate.
+
+To improve reliability, Netflix also uses techniques such as circuit breakers and retry mechanisms. These techniques prevent a failure in one part of the system from affecting the entire platform.
+
+In addition, Netflix uses a global content delivery network called **Open Connect**, which stores copies of videos in servers located close to users. This helps reduce buffering and improves streaming performance.
 
 ---
 
-## Example: Netflix Video Processing Pipeline
+## Example: Video Processing System
 
-Netflix processes video content using a microservices-based pipeline called the **Cosmos platform**.
+Before a movie or series can be streamed on Netflix, it must go through several processing steps.
 
-Previously, the system used a monolithic application called “Reloaded,” which made updates slow and difficult. Cosmos replaced it with smaller services that perform specialized tasks.
+Instead of performing all of these tasks in one program, Netflix uses multiple services that work together. Some services inspect the video and collect metadata, while others analyze the complexity of the content to determine the best streaming quality.
 
-Some of these services include:
+Additional services handle the encoding process, convert the video into different formats, and verify that the final output meets quality standards.
 
-- **Video Inspection Service (VIS)** – Extracts metadata from video files  
-- **Complexity Analysis Service (CAS)** – Analyzes video complexity  
-- **Ladder Generation Service (LGS)** – Determines optimal streaming bitrates  
-- **Video Encoding Service (VES)** – Encodes video into multiple formats  
-- **Video Quality Service (VQS)** – Measures video quality using VMAF  
-- **Video Validation Service (VVS)** – Ensures the video meets required standards  
-
-Workflow orchestrators combine these services when needed. This system allows Netflix to process videos faster and scale different parts of the pipeline independently.
+This modular design allows Netflix to process content faster and adapt to new streaming requirements more easily.
 
 ---
 
 ## Why Microservices Work Well for Netflix
 
-### Scalability
+Microservices are effective for Netflix mainly because of the company’s global scale.
 
-Each service can scale independently. During peak usage, Netflix can quickly launch thousands of additional service instances to handle increased demand.
+First, the architecture allows the platform to scale different components independently. If streaming demand increases, Netflix can expand the streaming services without changing other parts of the system.
 
-### Reliability and Resilience
+Second, the system becomes more reliable because failures are isolated. If one service experiences problems, the rest of the platform can continue functioning.
 
-Failures in one service usually do not affect the entire platform. Netflix also uses chaos engineering techniques (such as the Simian Army) to test system resilience.
-
-### Faster Development
-
-Teams can deploy updates independently. Netflix engineers deploy new changes hundreds of times per day without needing to coordinate with every other team.
-
-### Cost Efficiency
-
-Independent scaling and intelligent caching through Open Connect help Netflix manage bandwidth and computing costs even at massive global scale.
-
-Netflix emphasizes that microservices are not a magic solution. They require strong monitoring systems, automation, and engineering culture to work effectively.
+Finally, microservices allow development teams to work independently. This enables Netflix to introduce improvements and new features quickly.
 
 ---
 
-# Companies That Reverted to Monolithic Architecture
+## Companies That Returned to Monolithic Systems
 
-Although microservices work well for large companies like Netflix, some organizations discovered that the complexity of managing many services outweighed the benefits. As a result, they simplified parts of their systems by moving back to monolithic or modular architectures.
+Although microservices offer many advantages, they also introduce new challenges. Managing a large number of services can increase operational complexity and make debugging more difficult.
 
----
+Because of this, some companies have simplified parts of their systems by returning to monolithic or modular architectures.
 
-## Amazon Prime Video (2023)
+### Amazon Prime Video
 
-One of the most well-known examples is Amazon Prime Video.
+One example is Amazon Prime Video. Engineers working on the platform’s video monitoring system originally built it using a serverless microservices design.
 
-The company originally built its video quality monitoring system using a serverless microservices architecture. This design used AWS Step Functions to coordinate tasks and AWS Lambda functions to process video streams.
+However, the architecture required many interactions between services, which led to high costs and performance limitations. To solve this issue, the team redesigned the system as a single application running on cloud servers.
 
-However, several problems appeared:
+After the change, infrastructure costs were significantly reduced and the system became easier to scale.
 
-- Step Functions had limits on the number of state transitions per second  
-- Large amounts of data had to be transferred between services through S3  
-- Infrastructure costs became very high  
-- The system could only scale to about 5% of the desired workload  
+### Twilio Segment
 
-To solve these problems, the engineering team redesigned the system as a **single monolithic application running on EC2/ECS**.
+Another example is Twilio Segment, a platform that processes customer data. Over time, its microservices architecture expanded to more than one hundred services.
 
-This new design allowed all components to run within the same memory space, eliminating expensive data transfers between services.
+Many of these services depended on shared components, which meant that updates often required changes across the entire system. This created operational difficulties and slowed development.
 
-The results were significant:
-
-- Infrastructure costs dropped by about **90%**
-- System performance improved
-- Scaling became much easier
-
-The team concluded that for this type of real-time video analysis workload, microservices introduced unnecessary overhead.
+To address the problem, engineers combined many of the services into a single application. This simplified deployment and improved productivity.
 
 ---
 
-## Twilio Segment (2018)
+## Industry Perspective
 
-Another example is Twilio Segment, a platform that processes large amounts of customer data.
+The experiences of companies like Amazon Prime Video and Twilio show that microservices are not always the best solution. For smaller systems or smaller teams, the complexity of managing many services can outweigh the benefits.
 
-Segment initially used microservices to isolate slow data destinations. Over time, the system grew to more than 100 services. However, many of these services relied on shared libraries, which meant that changes often required redeploying the entire system.
-
-This situation became known as a **distributed monolith**.
-
-The problems included:
-
-- Slower developer productivity  
-- Increased operational complexity  
-- Higher defect rates  
-
-To address these issues, the company consolidated the system into a **single monolithic service stored in a monorepo**.
-
-After this change, developer productivity increased significantly and the system became easier to maintain.
+Because of this, some organizations now prefer **modular monolithic architectures**. In this approach, the system remains in one application but is structured into separate modules that can later be converted into microservices if needed.
 
 ---
 
-## Broader Industry Trend
+## Conclusion
 
-Many smaller companies and teams have reported similar challenges with microservices. Managing many independent services can make debugging difficult, increase deployment coordination, and raise cloud infrastructure costs.
+Netflix demonstrates how microservices can successfully support a large global platform. By dividing its system into independent services, the company can scale efficiently and maintain high reliability.
 
-Because of this, some organizations now prefer **modular monolith architectures**, where the system is built as a single application but organized into clearly separated modules. If needed, these modules can later be extracted into microservices.
+However, other organizations have discovered that microservices can introduce significant complexity. In some cases, returning to a simpler monolithic architecture has improved performance, reduced costs, and made systems easier to manage.
 
----
-
-# Summary
-
-Netflix demonstrates how microservices can work extremely well at massive scale, allowing the company to serve hundreds of millions of users reliably.
-
-However, examples like Amazon Prime Video and Twilio Segment show that microservices are not always the best solution. In some cases, the complexity of distributed systems can outweigh their benefits.
-
-Ultimately, the choice between microservices and monolithic architecture depends on factors such as system scale, team size, and workload requirements.
+Therefore, choosing the right architecture depends on the size of the system, the development team, and the specific requirements of the application.
