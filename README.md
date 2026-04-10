@@ -10,6 +10,21 @@ Microservices architecture solves this problem by breaking a large application i
 
 Netflix is one of the most well-known companies that successfully adopted microservices. However, some organizations later realized that microservices introduced too much complexity and decided to simplify their systems by returning to monolithic designs.
 
+## How Netflix Microservices Work
+
+Instead of one big system, Netflix has hundreds of small services, for example:
+
+User Profile Service
+Recommendation Service
+Streaming Service
+Billing Service
+
+Each service:
+
+Runs independently
+Communicates via APIs
+Can be deployed separately
+
 
 
 ## Netflix’s Use of Microservices
